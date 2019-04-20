@@ -1,0 +1,53 @@
+<tr>
+  <td><%= location.city %></td>
+  <td>
+    <%= image_tag('thermometer.svg', width: "20", height: "20", class: 'd-inline-block align-top') %>
+    <%= location.last_tavg %>
+  </td>
+  <td>
+    <button class="btn btn-outline-primary btn-sm" type="button" data-href='<%= api_v1_location_url(location.id) %>' id="update-<%= location.id %>">Update <i class="fa fa-arrow-down"></i></button>
+  </td>
+  <td>
+    <button class="btn btn-outline-danger btn-sm" type="button" data-href='<%= api_v1_location_url(location.id) %>' id="delete-<%= location.id %>"><i class="fa fa-minus"></i></button>
+    <script>
+      $(document).ready(function(){
+        $('#delete-<%= location.id %>').click(function(){
+          if (confirm('Are you sure?')) {
+            axios.delete($(this).attr('data-href'))
+              .then(function (response) {
+                $('#locations').html(response.data.html_content);
+                $('#alert').removeClass('alert-danger')
+                  .addClass('alert-success')
+                  .removeClass('hide')
+                  .addClass('show');
+                $('#alert > span').html('Location deleted!');
+              }, function (error) {
+                $('#alert').removeClass('hide')
+                  .addClass('show');
+                $('#alert > span').html(error.response.data.message);
+              });
+          }
+          return false;
+        })
+
+        $('#update-<%= location.id %>').click(function(){
+          axios.put($(this).attr('data-href'))
+            .then(function (response) {
+              $('#locations').html(response.data.html_content);
+              $('#response').html(response.data.response_data);
+              $('#alert').removeClass('alert-danger')
+                .addClass('alert-success')
+                .removeClass('hide')
+                .addClass('show');
+              $('#alert > span').html('Location updated!');
+            }, function (error) {
+              $('#alert').removeClass('hide')
+                .addClass('show');
+              $('#alert > span').html(error.response.data.message);
+            });
+          return false;
+        })
+      });
+    </script>
+  </td>
+</tr>

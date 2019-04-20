@@ -1,0 +1,41 @@
+  <% if response_data %>
+    <div class="row">
+      <div class="col">
+        <%= image_tag('thermometer.svg', class: "d-inline-block align-top img-fluid") %>
+      </div>
+      <div class="col">
+        <% temps_c = response_data['forecast']['forecastday'].map { |fd| fd['day'] }.pluck('avgtemp_c') %>
+        <% temps_f = response_data['forecast']['forecastday'].map { |fd| fd['day'] }.pluck('avgtemp_f') %>
+        <% atemp_c = temps_c.sum / temps_c.count %>
+        <% atemp_f = temps_f.sum / temps_f.count %>
+        <h2><%= atemp_c.round(1) %>ºC/<%= atemp_f.round(1) %>ºF</h2>
+        <h4><%= response_data['location']['name'] %></h4>
+        <p><small>Avg. <%= response_data['forecast']['forecastday'].first['date'] %> - <%= response_data['forecast']['forecastday'].last['date'] %> </small></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Avg. ºC</th>
+              <th scope="col">Avg. ºF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% response_data['forecast']['forecastday'].each do |date| %>
+            <tr>
+              <th scope="row"><%= date['date'] %></th>
+              <td><%= date['day']['avgtemp_c'] %></td>
+              <td><%= date['day']['avgtemp_f'] %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
