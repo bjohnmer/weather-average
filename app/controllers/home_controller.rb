@@ -36,7 +36,7 @@ class HomeController < ApplicationController
           lat, lon = @location.first.data['lat'], @location.first.data['lon']
         end
         @client = Client.create!({latitude: lat, longitude: lon})
-        cookies.permanent[:weather_average] = client.session_id
+        cookies.permanent[:weather_average] = @client.session_id
       end
     end
 end
