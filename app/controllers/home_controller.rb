@@ -27,14 +27,15 @@ class HomeController < ApplicationController
     end
 
     def set_session
+      if @location.first.data.key?('loc')
+        lat, lon = @location.first.data['loc'].split(',')
+      else
+        lat, lon = @location.first.data['lat'], @location.first.data['lon']
+      end
       if cookies[:weather_average]
         @client = Client.find_by_session_id(cookies[:weather_average])
+        @client = Client.create!({latitude: lat, longitude: lon}) unless @client
       else
-        if @location.first.data.key?('loc')
-          lat, lon = @location.first.data['loc'].split(',')
-        else
-          lat, lon = @location.first.data['lat'], @location.first.data['lon']
-        end
         @client = Client.create!({latitude: lat, longitude: lon})
         cookies.permanent[:weather_average] = @client.session_id
       end
