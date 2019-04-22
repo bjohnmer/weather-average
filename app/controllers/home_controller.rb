@@ -27,6 +27,7 @@ class HomeController < ApplicationController
     end
 
     def set_session
+      lat, lon = '',''
       if @location.first.data.key?('loc')
         lat, lon = @location.first.data['loc'].split(',')
       else
