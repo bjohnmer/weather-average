@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
   private
     def set_location
-      @location_city = request.remote_ip == '::1' ? 'New York City' : request.remote_ip
+      @location_city = (request.remote_ip == '::1' || request.remote_ip == '127.0.0.1') ? 'New York City' : request.remote_ip
       @location = Geocoder.search(@location_city)
       if @location.any?
         if @location.first
