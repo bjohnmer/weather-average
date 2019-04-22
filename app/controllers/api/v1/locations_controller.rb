@@ -14,16 +14,10 @@ module Api::V1
       render status: 401, json: {
         message: message || ''
       } and return unless location
-      html_content = render_to_string partial: 'locations/locations',
-                                      formats: :html,
-                                      layout: false,
-                                      locals: { locations: @client.locations }
+      html_content = html_render('locations/locations', nil, @client.locations)
       response = service.forecast
-      response_data = render_to_string partial: 'home/response',
-                                       formats: :html,
-                                       layout: false,
-                                       locals: { response_data: response }
-      render status: 200, :json => { html_content: html_content, response_data: response_data  }
+      response_data = html_render('home/response', response)
+      render status: 200, json: { html_content: html_content, response_data: response_data  }
     end
 
     def update
@@ -32,27 +26,18 @@ module Api::V1
       render status: 401, json: {
         message: "Error updating: #{@location.errors.full_messages.to_sentence}"
       } and return unless @location.update(loc)
-      html_content = render_to_string partial: 'locations/locations',
-                                      formats: :html,
-                                      layout: false,
-                                      locals: { locations: @client.locations }
+      html_content = html_render('locations/locations', nil, @client.locations)
       response = service.forecast
-      response_data = render_to_string partial: 'home/response',
-                                       formats: :html,
-                                       layout: false,
-                                       locals: { response_data: response }
-      render status: 200, :json => { html_content: html_content, response_data: response_data  }
+      response_data = html_render('home/response', response)
+      render status: 200, json: { html_content: html_content, response_data: response_data  }
     end
 
     def destroy
       render status: 401, json: {
         message: "Error deleting: #{@location.errors.full_messages.to_sentence}"
       } and return unless @location.destroy
-      html_content = render_to_string partial: 'locations/locations',
-                                      formats: :html,
-                                      layout: false,
-                                      locals: { locations: @client.locations }
-      render status: 200, :json => { :html_content => html_content }
+      html_content = html_render('locations/locations', nil, @client.locations)
+      render status: 200, json: { html_content: html_content }
     end
 
     private
@@ -73,6 +58,13 @@ module Api::V1
         render status: 404, json: {
           message: 'Location not found'
         } and return unless @location
+      end
+
+      def html_render(partial_name, response_data, locations = nil)
+        render_to_string partial: partial_name,
+          formats: :html,
+          layout: false,
+          locals: { response_data: response_data, locations: locations }
       end
   end
 end

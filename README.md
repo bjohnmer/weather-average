@@ -1,27 +1,40 @@
 # weather-average
-Weather Average App
+Is a small web app that allows to check forecast temperature average from any city worldwide
 
-# README
+## How to:
+Url: [https://weather-average.herokuapp.com/](https://weather-average.herokuapp.com/)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![App index](public/weather-md/1.png)
 
-Things you may want to cover:
+Just type in the text input the name of any city and click on the button `Add +`
 
-* Ruby version
+![App index](public/weather-md/2.png)
 
-* System dependencies
+After that, will be noticed that the city is created as an item in a personal list.
 
-* Configuration
+![App index](public/weather-md/3.png)
 
-* Database creation
+Is able to create any city that user would want to check forecast temperature average. At the right will be shown a forecast temperature table for next seven days and the average temperature.
+User can check and update any city in the list just clicking on the `Update` button.
 
-* Database initialization
+![App index](public/weather-md/4.png)
 
-* How to run the test suite
+## Architecture:
+- Backend Technologies:
+  - Programming Language: Ruby
+  - Framework: Ruby on Rails
+  - Database: PostgreSQL
+  - Third-party APIs: [https://www.apixu.com/](https://www.apixu.com/)
+- Front-end Technologies
+  - HTML/CSS Framework: [https://getbootstrap.com/](https://getbootstrap.com/) Bootstrap v4.3
+  - Libraries:
+    + Jquery v3
+    + Axios
 
-* Services (job queues, cache servers, search engines, etc.)
+## Nice to have:
+- Sign up feature: Register users in the webapp.
+- Update all button: button to update all just in one click all cities forecast temperature average registered in the personal list.
+- Live search: To be more accurate would be nice to show a list of suggested cities as user be typing.
 
-* Deployment instructions
-
-* ...
+## Code:
+- [https://github.com/bjohnmer/weather-average](https://github.com/bjohnmer/weather-average)

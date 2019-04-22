@@ -1,7 +1,7 @@
 class ApixuService
   APIXU_BASEURL = 'http://api.apixu.com/v1/forecast.json?'
 
-  attr_reader :city
+  attr_reader :city, :location
 
   def initialize(city)
     @city = city
