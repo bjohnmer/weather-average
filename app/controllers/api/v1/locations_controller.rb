@@ -14,7 +14,7 @@ module Api::V1
       render status: 401, json: {
         message: message || ''
       } and return unless location
-      html_content = render_to_string partial: 'home/locations',
+      html_content = render_to_string partial: 'locations/locations',
                                       formats: :html,
                                       layout: false,
                                       locals: { locations: @client.locations }
@@ -32,7 +32,7 @@ module Api::V1
       render status: 401, json: {
         message: "Error updating: #{@location.errors.full_messages.to_sentence}"
       } and return unless @location.update(loc)
-      html_content = render_to_string partial: 'home/locations',
+      html_content = render_to_string partial: 'locations/locations',
                                       formats: :html,
                                       layout: false,
                                       locals: { locations: @client.locations }
@@ -48,7 +48,7 @@ module Api::V1
       render status: 401, json: {
         message: "Error deleting: #{@location.errors.full_messages.to_sentence}"
       } and return unless @location.destroy
-      html_content = render_to_string partial: 'home/locations',
+      html_content = render_to_string partial: 'locations/locations',
                                       formats: :html,
                                       layout: false,
                                       locals: { locations: @client.locations }

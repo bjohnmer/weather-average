@@ -1,0 +1,27 @@
+.col
+  .row
+    .col  
+  #alert.alert.alert-danger.alert-dismissible.fade.hide{role: "alert"}
+    %strong Message!
+    = succeed "." do
+      %span
+    %button.close{"aria-label" => "Close", "data-dismiss" => "alert", type: "button"}
+      %span{"aria-hidden" => "true"} ×
+  .row
+    .col-xs-12.col-sm
+      .row
+        .form-inline.my-2.my-lg-0
+          %input#search.form-control.mr-sm-2{"aria-label" => "Search", placeholder: "City", type: "search"}/
+          %button#add.btn.btn-outline-success
+            Add
+            %i.fa.fa-plus
+      .row
+        .col  
+      - if @client
+        .row
+          .col
+            %table.table.table-borderless.table-responsive
+              %tbody#locations
+                = render 'locations/locations', locations: @client.locations
+    #response.col-xs-12.col-sm
+      = render 'response', response_data: @response

@@ -1,17 +1,18 @@
-<tr>
-  <td><%= location.city %></td>
-  <td>
-    <%= image_tag('thermometer.svg', width: "20", height: "20", class: 'd-inline-block align-top') %>
-    <%= location.last_tavg %>
-  </td>
-  <td>
-    <button class="btn btn-outline-primary btn-sm" type="button" data-href='<%= api_v1_location_url(location.id) %>' id="update-<%= location.id %>">Update <i class="fa fa-arrow-down"></i></button>
-  </td>
-  <td>
-    <button class="btn btn-outline-danger btn-sm" type="button" data-href='<%= api_v1_location_url(location.id) %>' id="delete-<%= location.id %>"><i class="fa fa-minus"></i></button>
-    <script>
+%tr
+  %td= location.city
+  %td
+    = image_tag('thermometer.svg', width: "20", height: "20", class: 'd-inline-block align-top')
+    = location.last_tavg
+  %td
+    %button.btn.btn-outline-primary.btn-sm{"data-href" => "#{api_v1_location_url(location.id)}", id: "update-#{location.id}", type: "button"}
+      Update
+      %i.fa.fa-arrow-down
+  %td
+    %button.btn.btn-outline-danger.btn-sm{"data-href" => "#{api_v1_location_url(location.id)}", id: "delete-#{location.id}", type: "button"}
+      %i.fa.fa-minus
+    :javascript
       $(document).ready(function(){
-        $('#delete-<%= location.id %>').click(function(){
+        $('#delete-#{location.id}').click(function(){
           if (confirm('Are you sure?')) {
             axios.delete($(this).attr('data-href'))
               .then(function (response) {
@@ -30,7 +31,7 @@
           return false;
         })
 
-        $('#update-<%= location.id %>').click(function(){
+        $('#update-#{location.id}').click(function(){
           axios.put($(this).attr('data-href'))
             .then(function (response) {
               $('#locations').html(response.data.html_content);
@@ -48,6 +49,3 @@
           return false;
         })
       });
-    </script>
-  </td>
-</tr>

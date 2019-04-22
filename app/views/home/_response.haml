@@ -1,0 +1,32 @@
+- if response_data
+  .row
+    .col
+      = image_tag('thermometer.svg', class: "d-inline-block align-top img-fluid")
+    .col
+      - temps_c = response_data['forecast']['forecastday'].map { |fd| fd['day'] }.pluck('avgtemp_c')
+      - temps_f = response_data['forecast']['forecastday'].map { |fd| fd['day'] }.pluck('avgtemp_f')
+      - atemp_c = temps_c.sum / temps_c.count
+      - atemp_f = temps_f.sum / temps_f.count
+      %h2
+        = atemp_c.round(1)
+        ºC/#{atemp_f.round(1)}ºF
+      %h4= response_data['location']['name']
+      %p
+        %small
+          Avg. #{response_data['forecast']['forecastday'].first['date']} - #{response_data['forecast']['forecastday'].last['date']}
+  .row
+    .col  
+  .row
+    .col
+      %table.table
+        %thead
+          %tr
+            %th{scope: "col"} Date
+            %th{scope: "col"} Avg. ºC
+            %th{scope: "col"} Avg. ºF
+        %tbody
+          - response_data['forecast']['forecastday'].each do |date|
+            %tr
+              %th{scope: "row"}= date['date']
+              %td= date['day']['avgtemp_c']
+              %td= date['day']['avgtemp_f'] 
